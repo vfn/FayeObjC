@@ -88,7 +88,11 @@ enum {
 
 -(void)open {
     if (!connected) {
-        [socket connectToHost:url.host onPort:[url.port intValue] withTimeout:5 error:nil];
+		NSError *error = nil;
+        [socket connectToHost:url.host onPort:[url.port intValue] withTimeout:5 error:&error];
+		if (error) {
+			NSLog(@"Error connecting to socket: %@", [error localizedDescription]);
+		}
         if (runLoopModes) [socket setRunLoopModes:runLoopModes];
     }
 }

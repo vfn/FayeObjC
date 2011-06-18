@@ -45,7 +45,8 @@
         continue; // skip this one 
       
       if([[propName substringToIndex:1] isEqualToString:@"_"]) {
-        NSLog(@"PRIVATE PROPERTY! %@", propName);
+		  // This is annoying. Stop logging it.
+        //NSLog(@"PRIVATE PROPERTY! %@", propName);
         continue;
       }
       
