@@ -46,15 +46,7 @@ enum _fayeStates {
 #define SUBSCRIBE_CHANNEL @"/meta/subscribe"
 #define UNSUBSCRIBE_CHANNEL @"/meta/unsubscribe"
 
-@protocol FayeClientDelegate <NSObject>
-
-- (void)messageReceived:(NSDictionary *)messageDict;
-- (void)connectedToServer;
-- (void)disconnectedFromServer;
-- (void)subscriptionFailedWithError:(NSString *)error;
-
-@end
-
+@protocol FayeClientDelegate;
 
 @interface FayeClient : NSObject <ZTWebSocketDelegate> {
   NSString *fayeURLString;
@@ -81,5 +73,17 @@ enum _fayeStates {
 - (void) disconnectFromServer;
 - (void) sendMessage:(NSDictionary *)messageDict;
 - (void) sendMessage:(NSDictionary *)messageDict withExt:(NSDictionary *)extension;
+
+@end
+
+@class FayeMessage;
+
+@protocol FayeClientDelegate <NSObject>
+
+- (void)messageReceived:(NSDictionary *)messageDict;
+- (void)connectedToServer;
+- (void)disconnectedFromServer;
+- (void)fayeClient:(FayeClient *)fayeClient didSubscribeToChannel:(NSString *)channel subscriptionMessage:(FayeMessage *)message;
+- (void)subscriptionFailedWithError:(NSString *)error;
 
 @end

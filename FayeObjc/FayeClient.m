@@ -308,7 +308,10 @@
       }
     } else if ([fm.channel isEqualToString:SUBSCRIBE_CHANNEL]) {      
       if ([fm.successful boolValue]) {
-        NSLog(@"SUBSCRIBED TO CHANNEL %@ ON FAYE", fm.subscription);        
+        NSLog(@"SUBSCRIBED TO CHANNEL %@ ON FAYE", fm.subscription);
+		  if([self.delegate respondsToSelector:@selector(fayeClient:didSubscribeToChannel:subscriptionMessage:)]) {          
+			  [self.delegate fayeClient:self didSubscribeToChannel:fm.subscription subscriptionMessage:fm];
+		  }
       } else {
         NSLog(@"ERROR SUBSCRIBING TO %@ WITH ERROR %@", fm.subscription, fm.error);
         if(self.delegate != NULL && [self.delegate respondsToSelector:@selector(subscriptionFailedWithError:)]) {          
